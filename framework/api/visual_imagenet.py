@@ -14,6 +14,7 @@
 import json
 import os
 import urllib.request
+import time
 
 import torch
 import torchvision.transforms as transforms
@@ -88,7 +89,6 @@ class IMAGENET(APIView):
           Later versions will not contexturn an image's address,
           but instead a base64-bit encoded address
         """
-
         base_path = "static/imagenet"
 
         try:
@@ -121,6 +121,7 @@ class IMAGENET(APIView):
             but instead a base64-bit encoded address
         """
 
+        start = time.time()
         context = None
 
         # Get the url for the image
@@ -158,4 +159,6 @@ class IMAGENET(APIView):
                 "filename": filename,
                 "label": label,
                 "probability": probability}
+        end = time.time()
+        print(end - start)
         return render(request, "imagenet.html", context)
